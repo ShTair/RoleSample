@@ -84,6 +84,19 @@ namespace RoleSample
         }
     }
 
+    public class ApplicationRoleManager : RoleManager<ApplicationRole, string>
+    {
+        public ApplicationRoleManager(IRoleStore<ApplicationRole, string> store) : base(store)
+        {
+        }
+
+        public static ApplicationRoleManager Create(IdentityFactoryOptions<ApplicationRoleManager> options, IOwinContext context)
+        {
+            var manager = new ApplicationRoleManager(new RoleStore<ApplicationRole>(context.Get<ApplicationDbContext>()));
+            return manager;
+        }
+    }
+
     // このアプリケーションで使用されるアプリケーション サインイン マネージャーを構成します。
     public class ApplicationSignInManager : SignInManager<ApplicationUser, string>
     {
